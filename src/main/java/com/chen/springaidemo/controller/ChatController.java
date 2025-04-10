@@ -2,6 +2,8 @@ package com.chen.springaidemo.controller;
 
 import com.chen.springaidemo.constants.AiType;
 import com.chen.springaidemo.repository.ChatHisotryRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvisor;
@@ -24,12 +26,14 @@ import static org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvis
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/ai")
+@Tag(name = "AI chat 接口", description = "调用此接口和Deepseek对话 需要部署大模型默认是本地")
 public class ChatController {
 
     private final ChatClient chatClient;
 
     private final ChatHisotryRepository chatHisotryRepository;
 
+    @Operation(summary = "AI对话接口", description = "流式调用")
     @RequestMapping(value = "/chat", produces = "text/html;charset=utf-8")
     public Flux<String> chat(String prompt, String chatId) {
 
@@ -45,6 +49,7 @@ public class ChatController {
                 .content();
     }
 
+    @Operation(summary = "AI对话接口", description = "非流式调用")
     @RequestMapping(value = "/chat2", produces = "text/html;charset=utf-8")
     public String chat2(String prompt) {
         return chatClient

@@ -2,6 +2,8 @@ package com.chen.springaidemo.controller;
 
 import com.chen.springaidemo.constants.AiType;
 import com.chen.springaidemo.repository.ChatHisotryRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +25,7 @@ import static org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvis
 @AllArgsConstructor
 @RestController
 @RequestMapping("/ai")
+@Tag(name = "客服接口", description = "客服接口")
 public class CustomerServiceController {
 
     private final ChatClient serviceChatClient;
@@ -42,6 +45,7 @@ public class CustomerServiceController {
 //                .stream()
 //                .content();
 //    }
+    @Operation(summary = "客服接口", description = "客服接口")
     @RequestMapping(value = "service", produces = "text/html;charset=utf-8")
     public String chat(String prompt, String chatId) {
         // 1. 保存会话ID

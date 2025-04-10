@@ -1,5 +1,7 @@
 package com.chen.springaidemo.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvisor;
@@ -20,11 +22,13 @@ import reactor.core.publisher.Flux;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/ai")
+@Tag(name = "游戏接口", description = "游戏接口")
 public class GameController {
 
     private final ChatClient gameChatClient;
 
 
+    @Operation(summary = "游戏接口", description = "流式调用")
     @RequestMapping(value = "/game", produces = "text/html;charset=utf-8")
     public Flux<String> chat(String prompt, String chatId) {
         return gameChatClient.prompt()

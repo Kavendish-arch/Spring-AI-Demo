@@ -37,3 +37,12 @@ logging:
   level:
     org.springframework.ai.chat.client.advisor: debug
     com.chen.springaidemo: debug
+
+# 生产环境关闭
+springdoc:
+  api-docs:
+    enabled: true # 开启openAPI接口
+    path: /use-server/v3/api-docs
+  swagger-ui:
+    enabled: true
+    path: /use-server/swagger-ui

@@ -4,6 +4,8 @@ import com.chen.springaidemo.constants.AiType;
 import com.chen.springaidemo.entity.vo.Result;
 import com.chen.springaidemo.repository.ChatHisotryRepository;
 import com.chen.springaidemo.repository.FileRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvisor;
@@ -39,6 +41,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/ai/pdf")
+@Tag(name = "PDF文件接口", description = "上传PDF文件，获取PDF文件内容，并调用AI模型进行问答")
 public class PdfFileController {
 
     private final FileRepository fileRepository;
@@ -52,6 +55,7 @@ public class PdfFileController {
     /**
      * 文件上传
      */
+    @Operation(summary = "上传PDF文件", description = "上传PDF文件")
     @RequestMapping("/upload/{chatId}")
     public Result uploadPdf(@PathVariable String chatId, @RequestParam("file") MultipartFile file) {
         try {
@@ -77,6 +81,7 @@ public class PdfFileController {
     /**
      * 文件下载
      */
+    @Operation(summary = "下载PDF文件", description = "下载PDF文件")
     @GetMapping("/file/{chatId}")
     public ResponseEntity<Resource> download(@PathVariable("chatId") String chatId) throws IOException {
         // 1.读取文件
@@ -113,6 +118,7 @@ public class PdfFileController {
         vectorStore.add(documents);
     }
 
+    @Operation(summary = "PDF文件对话", description = "PDF文件对话")
     @RequestMapping(value = "/chat", produces = "text/html;charset=utf-8")
     public Flux<String> chat(String prompt, String chatId) {
 

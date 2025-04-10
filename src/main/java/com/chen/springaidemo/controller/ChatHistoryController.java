@@ -2,6 +2,8 @@ package com.chen.springaidemo.controller;
 
 import com.chen.springaidemo.entity.vo.MessageVo;
 import com.chen.springaidemo.repository.ChatHisotryRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.messages.Message;
@@ -27,6 +29,7 @@ import static org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvis
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/ai/history")
+@Tag(name = "AI历史记录接口", description = "获取AI历史记录，凭借会话id获取历史记录")
 public class ChatHistoryController {
 
 
@@ -34,12 +37,14 @@ public class ChatHistoryController {
 
     private final ChatMemory chatMemory;
 
+    @Operation(summary = "根据会话类型获取会话id", description = "获取AI历史记录的会话id")
     @GetMapping(value = "/{type}")
     public Object getChatIds(@PathVariable("type") String type) {
 
         return chatHisotryRepository.getChatIds(type);
     }
 
+    @Operation(summary = "获取AI历史记录", description = "获取AI历史记录")
     @GetMapping(value = "/{type}/{chatId}")
     public List<MessageVo> getChatHistory(@PathVariable("chatId") String chatId,
                                           @PathVariable("type") String type) {

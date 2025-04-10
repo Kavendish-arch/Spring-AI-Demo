@@ -1,6 +1,8 @@
 package com.chen.springaidemo.entity.vo;
 
 import com.chen.springaidemo.domain.Course;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
 
 /**
 * @projectName SpringAIDemo
@@ -12,6 +14,8 @@ import com.chen.springaidemo.domain.Course;
 * @version 1.0
 * @description @todo 
 */
+@Data
+@Schema(title = "课程信息")
 public class CourseVO extends Course {
     public CourseVO(Course course) {
         this.setId(course.getId());
