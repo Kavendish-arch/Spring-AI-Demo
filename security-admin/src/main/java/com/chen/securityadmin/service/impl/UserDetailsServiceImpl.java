@@ -5,6 +5,7 @@ import com.chen.securityadmin.entiry.dto.LoginUser;
 import com.chen.securityadmin.entiry.po.DRoles;
 import com.chen.securityadmin.entiry.po.DUserRoles;
 import com.chen.securityadmin.entiry.po.DUsers;
+import com.chen.securityadmin.entiry.vo.VUserRole;
 import com.chen.securityadmin.mapper.DRolesMapper;
 import com.chen.securityadmin.mapper.DUserRolesMapper;
 import com.chen.securityadmin.mapper.DUsersMapper;
@@ -54,26 +55,29 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         System.out.println("------------------------------------------------");
         System.out.println(dUsers);
         System.out.println("------------------------------------------------");
+        VUserRole vUserRole = dUsersMapper.getUserRoleByUserId(dUsers.getUserId());
+//        dUserRolesLambdaQueryWrapper.eq(DUserRoles::getUserId, dUsers.getUserId());
+//        // 查询用户角色
+//        List<DUserRoles> dUserRoles = dUserRolesMapper.selectList(dUserRolesLambdaQueryWrapper);
+//        // 查询角色
+//        List<DRoles> userHaveRoles = new ArrayList<>();
+//        for (DUserRoles dUserRole : dUserRoles) {
+//            dRolesLambdaQueryWrapper.eq(DRoles::getRoleId, dUserRole.getRoleId());
+//            DRoles dRoles = dRolesMapper.selectOne(dRolesLambdaQueryWrapper);
+//            userHaveRoles.add(dRoles);
+//        }
 
-        dUserRolesLambdaQueryWrapper.eq(DUserRoles::getUserId, dUsers.getUserId());
-        // 查询用户角色
-        List<DUserRoles> dUserRoles = dUserRolesMapper.selectList(dUserRolesLambdaQueryWrapper);
-        // 查询角色
-        List<DRoles> userHaveRoles = new ArrayList<>();
-        for (DUserRoles dUserRole : dUserRoles) {
-            dRolesLambdaQueryWrapper.eq(DRoles::getRoleId, dUserRole.getRoleId());
-            DRoles dRoles = dRolesMapper.selectOne(dRolesLambdaQueryWrapper);
-            userHaveRoles.add(dRoles);
-        }
-
-        System.out.println("------------------------------------------------");
-        for (DRoles userHaveRole : userHaveRoles) {
-            System.out.println(userHaveRole.getRoleCode());
-        }
-        System.out.println("------------------------------------------------");
+//        System.out.println("------------------------------------------------");
+//        for (DRoles userHaveRole : userHaveRoles) {
+//            System.out.println(userHaveRole.getRoleCode());
+//        }
+//        System.out.println("------------------------------------------------");
+//
 
 
-        Collection<? extends GrantedAuthority> authorities = Collections.singleton(new SimpleGrantedAuthority("role_admin"));
+        String roleCode = vUserRole.getRoles().stream().findFirst().get().getRoleCode();
+
+        Collection<? extends GrantedAuthority> authorities = Collections.singleton(new SimpleGrantedAuthority(roleCode));
 
         return new LoginUser(dUsers, authorities);
     }

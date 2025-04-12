@@ -1,9 +1,14 @@
 package com.chen.securityadmin.mapper;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.chen.securityadmin.entiry.po.DRoles;
+import com.chen.securityadmin.entiry.po.DUsers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
 
 /**
  * @author chenyingtao
@@ -20,6 +25,9 @@ public class DRolesMapperTest {
 
     @Autowired
     private DRolesMapper dRolesMapper;
+
+    @Autowired
+    private DUsersMapper dUsersMapper;
 
 
     @Test
@@ -47,5 +55,20 @@ public class DRolesMapperTest {
         dRoles.setDescription("guess");
         System.out.println(dRolesMapper.insert(dRoles));
 
+    }
+
+    @Test
+    public void queryFromThreeTable() {
+
+        String userId = "1";
+        LambdaQueryWrapper<DUsers> queryWrapper = new LambdaQueryWrapper<>();
+
+        queryWrapper.eq(DUsers::getUserId, userId);
+
+        List<DUsers> dUsers = dUsersMapper.selectList(queryWrapper);
+        dUsers.forEach(dUsers1 -> {
+            System.out.println(dUsers1.getUsername());
+            System.out.println(dUsers1.getRealName());
+        });
     }
 }

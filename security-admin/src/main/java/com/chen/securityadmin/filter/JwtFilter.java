@@ -2,6 +2,7 @@ package com.chen.securityadmin.filter;
 
 import com.chen.securityadmin.tool.JwtProperties;
 import com.chen.securityadmin.tool.JwtUtil;
+import com.chen.securityadmin.tool.JwtUtil2;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
@@ -28,17 +29,17 @@ import java.io.IOException;
  * @date 2025/4/10 22:00
  * @description @todo
  */
-//@Component
+@Component
 public class JwtFilter extends OncePerRequestFilter {
 
-//    @Autowired
+    @Autowired
     private JwtProperties jwtProperties;
 
-//    @Autowired
+    @Autowired
     private UserDetailsService userDetailsService;
 
-//    @Autowired
-    private JwtUtil jwtUtil;
+    @Autowired
+    private JwtUtil2 jwtUtil;
 
     /**
      * JWT认证过滤器核心处理方法

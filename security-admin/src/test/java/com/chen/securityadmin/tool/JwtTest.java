@@ -27,6 +27,8 @@ import java.util.UUID;
 public class JwtTest {
     private long time = 60 * 1000 * 24;
     private String secret = "eyJuYW1lIjoiY2hlbiIsInJvbGUiOiJhZG1pbiIsInN1YiI6ImFkbWluLXRlc3QiLCJleHAiOjE3NDQyOTY3NzIsImp0aSI6ImVkYmZhMjAxLWFmZmYtNDNjZC04NmZjLTYzMzlhMmJlYTY5NSJ95jC2IjC_";
+
+    private JwtUtil jwtUtil;
     @Test
     public void test() {
     }
@@ -57,7 +59,7 @@ public class JwtTest {
     @Test
     public void parse(){
 
-        String token = "eyJ0eXBlIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJuYW1lIjoiY2hlbiIsInJvbGUiOiJhZG1pbiIsInN1YiI6ImFkbWluLXRlc3QiLCJleHAiOjE3NDQyOTY5MjQsImp0aSI6IjA0NTg3OGM2LWUxN2QtNDAxYS05MDU5LTI3YzAwOGZhYWY1MiJ9.QDDilwSp6VrZBr3FA-Lxh41czhtGRptuZ4tV9F8Irnk";
+        String token = "eyJ0eXBlIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJuYW1lIjoiY2hlbiIsInJvbGUiOiJhZG1pbiIsInN1YiI6ImFkbWluLXRlc3QiLCJleHAiOjE3NDQzNDM5NjYsImp0aSI6ImI2NjFhZjg4LTA2NjctNGY2ZC04NTE2LWIxNTE0Y2Q2YzMwOCJ9.Df6MutGHMxCETtM93gM_IIR9MD08V4Dtb5-qooTAdFM";
             // 复用解析器实例
         JwtParser jwtParser =  Jwts.parser().setSigningKey(secret).build();
         Jws<Claims> claimsJws = jwtParser.parseClaimsJws(token);
@@ -70,4 +72,6 @@ public class JwtTest {
         System.out.println(body.getId());
 
     }
+
+
 }
